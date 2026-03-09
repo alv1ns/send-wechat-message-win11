@@ -4,6 +4,10 @@ A Codex skill for sending WeChat desktop messages on Windows 11.
 
 It now also supports integrating with [WeFlow](https://github.com/hicccc77/WeFlow) as a local chat-history source for group-chat summarization.
 
+## Attribution
+
+This repository is a fork/adaptation of [tonyshield/send-wechat-message](https://github.com/tonyshield/send-wechat-message), with Windows 11 WeChat support and WeFlow integration added in this fork.
+
 ## What changed
 
 - Replaced the macOS `osascript` and Accessibility workflow with Windows foreground activation, UI Automation, clipboard, and screen-capture helpers.
