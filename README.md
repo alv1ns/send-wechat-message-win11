@@ -1,8 +1,14 @@
-﻿# send-wechat-message
+# send-wechat-message
 
 ## Attribution
 
 This repository is a fork/adaptation of [tonyshield/send-wechat-message](https://github.com/tonyshield/send-wechat-message), with Windows 11 WeChat support and WeFlow integration added in this fork.
+
+## Acknowledgements
+
+- Forked from and inspired by [tonyshield/send-wechat-message](https://github.com/tonyshield/send-wechat-message).
+- Group-chat summarization support in this fork is integrated with [hicccc77/WeFlow](https://github.com/hicccc77/WeFlow).
+- WeFlow itself credits other upstream projects in its own README. This fork does not directly vendor those projects' code, so they are not duplicated here; please also see the acknowledgements section in the WeFlow repository for its direct upstream credits.
 
 ## English
 
@@ -124,6 +130,12 @@ This repository is public. Published examples and docs should stay generic:
 
 ## 中文
 
+### 致谢
+
+- 本项目 fork / 改造自 [tonyshield/send-wechat-message](https://github.com/tonyshield/send-wechat-message)。
+- 本分支的群聊总结能力集成了 [hicccc77/WeFlow](https://github.com/hicccc77/WeFlow)。
+- `WeFlow` 在其 README 中还致谢了其他上游项目。由于本仓库没有直接 vendoring 这些项目的代码，这里不重复逐一列出；如需查看其直接上游致谢，请同时参考 WeFlow 仓库中的致谢说明。
+
 `send-wechat-message` 是一个用于控制 Windows 11 微信桌面端的 Codex skill，基于偏保守的 GUI 自动化流程。
 
 它遵循保守流程：
@@ -239,3 +251,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_weflow
 - 不要公开真实联系人名称或真实消息内容，除非已经明确做过匿名化
 - 示例里优先使用可复用的占位写法
 - 发送验证完成后应及时清理临时截图
+
