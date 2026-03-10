@@ -23,6 +23,7 @@ It is designed for a conservative workflow:
 - capture screenshots for verification
 
 It also supports integrating with [WeFlow](https://github.com/hicccc77/WeFlow) as a local chat-history source for group-chat summarization.
+This branch is WeFlow-only for summaries (no OCR fallback).
 
 ### Why Windows uses paste fallback
 
@@ -152,6 +153,7 @@ This repository is public. Published examples and docs should stay generic:
 - 用截图验证当前状态和发送结果
 
 它也支持结合 [WeFlow](https://github.com/hicccc77/WeFlow) 的本地 HTTP API 做群聊总结，不必完全依赖微信窗口滚动截图。
+本分支的群聊总结仅走 WeFlow（不包含 OCR 回退）。
 
 ### 为什么 Windows 版优先保留粘贴回退
 
@@ -169,6 +171,7 @@ This repository is public. Published examples and docs should stay generic:
 - `scripts/check_wechat_access.ps1`
 - `scripts/check_weflow_access.ps1`
 - `scripts/capture_wechat_window.ps1`
+- `scripts/get_active_chat_title.ps1 [-Expected "<name>"] [-Exact]`
 - `scripts/find_weflow_session.ps1 -Keyword "<名称>"`
 - `scripts/export_weflow_messages.ps1 [-Talker <id> | -SessionKeyword <name>]`
 - `scripts/prepare_weflow_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
@@ -185,6 +188,8 @@ This repository is public. Published examples and docs should stay generic:
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_wechat_access.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1 -Expected "文件传输助手" -Exact
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\focus_composer_and_set_value.ps1 -Message "hello from Codex"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
 ```
