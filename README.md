@@ -130,6 +130,12 @@ This repository is public. Published examples and docs should stay generic:
 
 ## 中文
 
+### 致谢
+
+- 本项目 fork / 改造自 [tonyshield/send-wechat-message](https://github.com/tonyshield/send-wechat-message)。
+- 本分支的群聊总结能力集成了 [hicccc77/WeFlow](https://github.com/hicccc77/WeFlow)。
+- `WeFlow` 在其 README 中还致谢了其他上游项目。由于本仓库没有直接 vendoring 这些项目的代码，这里不重复逐一列出；如需查看其直接上游致谢，请同时参考 WeFlow 仓库中的致谢说明。
+
 `send-wechat-message` 是一个用于控制 Windows 11 微信桌面端的 Codex skill，基于偏保守的 GUI 自动化流程。
 
 它遵循保守流程：
