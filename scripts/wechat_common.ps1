@@ -233,6 +233,25 @@ function Invoke-WeChatClick {
     Start-Sleep -Milliseconds 120
 }
 
+function Invoke-WeChatDrag {
+    param(
+        [Parameter(Mandatory)][int]$StartX,
+        [Parameter(Mandatory)][int]$StartY,
+        [Parameter(Mandatory)][int]$EndX,
+        [Parameter(Mandatory)][int]$EndY,
+        [int]$HoldMs = 60
+    )
+
+    [void][WeChatNativeMethods]::SetCursorPos($StartX, $StartY)
+    Start-Sleep -Milliseconds 80
+    [WeChatNativeMethods]::mouse_event(0x0002, 0, 0, 0, [UIntPtr]::Zero)
+    Start-Sleep -Milliseconds $HoldMs
+    [void][WeChatNativeMethods]::SetCursorPos($EndX, $EndY)
+    Start-Sleep -Milliseconds 80
+    [WeChatNativeMethods]::mouse_event(0x0004, 0, 0, 0, [UIntPtr]::Zero)
+    Start-Sleep -Milliseconds 120
+}
+
 function ConvertTo-WeChatWheelData {
     param([int]$Delta)
 

@@ -1,4 +1,4 @@
----
+﻿---
 name: send-wechat-message
 description: Send or draft WeChat desktop messages on Windows 11 through GUI automation, including opening WeChat, verifying foreground control and UI Automation access, navigating the visible chat list, checking the active chat title, writing exact Unicode text into the composer through UI Automation or clipboard paste, capturing verification screenshots, and sending only after explicit user confirmation. It also supports WeFlow-based group-chat summarization through the local HTTP API when available. Use when a user asks to open WeChat or 微信 on Windows, send a message to a contact or another account, prepare a message before sending, confirm delivery with a screenshot, summarize a group chat, or troubleshoot Codex control of the Windows WeChat app.
 ---
@@ -19,20 +19,25 @@ Prefer deterministic steps, verify state with screenshots or title checks, and n
 For GUI mode:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_wechat_access.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1 -Expected "文件传输助手" -Exact
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\check_wechat_access.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\capture_wechat_window.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\get_active_chat_title.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\get_active_chat_title.ps1 -Expected "file transfer" -Exact
 ```
 
 For WeFlow mode:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_weflow_access.ps1
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\find_weflow_session.ps1 -Keyword "项目群"
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_weflow_summary.ps1 -SessionKeyword "项目群" -Limit 300
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\check_weflow_access.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\find_weflow_session.ps1 -Keyword "project group"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\prepare_weflow_summary.ps1 -SessionKeyword "project group" -Limit 300
 ```
 
+For Auto mode:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\prepare_chat_summary.ps1 -SessionKeyword "project group"
+`$([Environment]::NewLine)
 ## GUI Workflow
 
 1. Verify that WeChat is installed and controllable.
@@ -104,6 +109,14 @@ Recommended summary workflow:
 
 Use GUI scrolling and screenshots only as a fallback when WeFlow is unavailable or the target session is missing from the API.
 
+## Auto Summary (WeFlow or OCR)
+
+Use the auto helper to prefer WeFlow and fall back to OCR when WeFlow is unavailable:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_chat_summary.ps1 -SessionKeyword "project group"
+```
+
 ## Script List
 
 - `scripts\check_wechat_access.ps1`
@@ -113,6 +126,8 @@ Use GUI scrolling and screenshots only as a fallback when WeFlow is unavailable 
 - `scripts\find_weflow_session.ps1 -Keyword "<name>"`
 - `scripts\export_weflow_messages.ps1 [-Talker <id> | -SessionKeyword <name>]`
 - `scripts\prepare_weflow_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
+- `scripts\prepare_chat_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
+- `scripts\ocr_chat_history.ps1 [-InputDir <path>] [-OutFile <path>]`
 - `scripts\navigate_chat_list.ps1 -Offset <int>`
 - `scripts\focus_composer_and_set_value.ps1 -Message "<message>"`
 - `scripts\focus_composer_and_paste.ps1 -Message "<message>"`
@@ -130,3 +145,9 @@ This repository is public. Keep examples generic:
 - do not publish real contact names or message contents unless intentionally anonymized
 - prefer reusable placeholders in examples
 - clean temporary screenshots after successful sends
+
+
+
+
+
+

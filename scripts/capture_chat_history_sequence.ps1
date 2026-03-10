@@ -1,6 +1,14 @@
 param(
     [int]$MaxPages = 20,
-    [string]$OutDir
+    [string]$OutDir,
+    [int]$StepsPerPage,
+    [int]$WheelDelta = 120,
+    [int]$PauseMs = 500,
+    [ValidateSet('wheel', 'scrollbar')]
+    [string]$ScrollMode = 'wheel',
+    [double]$ScrollbarXRatio = 0.965,
+    [double]$ScrollbarStartYRatio = 0.30,
+    [double]$ScrollbarEndYRatio = 0.60
 )
 
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -21,13 +29,34 @@ if (-not (Test-Path -LiteralPath $OutDir)) {
 $process = Get-OrStartWeChatProcess
 $window = Get-WeChatWindowInfo -Process $process
 $focus = Focus-WeChatHistory -Window $window
-$stepsPerPage = [Math]::Max(4, [Math]::Min(10, [int][Math]::Round($window.Height / 220)))
+$stepsPerPage = if ($StepsPerPage -gt 0) {
+    $StepsPerPage
+}
+else {
+    [Math]::Max(4, [Math]::Min(10, [int][Math]::Round($window.Height / 220)))
+}
+$scrollModeValue = $ScrollMode.ToLowerInvariant()
+if ($scrollModeValue -eq 'scrollbar' -and $StepsPerPage -le 0) {
+    $stepsPerPage = 1
+}
 $metadataPath = Join-Path $OutDir 'metadata.txt'
+$scrollbarStart = $null
+$scrollbarEnd = $null
+
+if ($scrollModeValue -eq 'scrollbar') {
+    $scrollbarStart = Get-WeChatRelativePoint -Window $window -XRatio $ScrollbarXRatio -YRatio $ScrollbarStartYRatio
+    $scrollbarEnd = Get-WeChatRelativePoint -Window $window -XRatio $ScrollbarXRatio -YRatio $ScrollbarEndYRatio
+}
 
 @(
     "window=$($window.Left),$($window.Top),$($window.Width),$($window.Height)",
     "focus=($($focus.X),$($focus.Y))",
     "steps_per_page=$stepsPerPage",
+    "wheel_delta=$WheelDelta",
+    "pause_ms=$PauseMs",
+    "scroll_mode=$scrollModeValue",
+    "scrollbar_start=$($scrollbarStart.X),$($scrollbarStart.Y)",
+    "scrollbar_end=$($scrollbarEnd.X),$($scrollbarEnd.Y)",
     "max_pages=$MaxPages"
 ) | Set-Content -Path $metadataPath
 
@@ -51,11 +80,19 @@ for ($page = 1; $page -le $MaxPages; $page++) {
     $previousHash = $currentHash
 
     if ($page -lt $MaxPages) {
-        Invoke-WeChatClick -X $focus.X -Y $focus.Y
-        for ($step = 0; $step -lt $stepsPerPage; $step++) {
-            Invoke-WeChatWheel -Delta 120
+        if ($scrollModeValue -eq 'scrollbar') {
+            for ($step = 0; $step -lt $stepsPerPage; $step++) {
+                Invoke-WeChatDrag -StartX $scrollbarStart.X -StartY $scrollbarStart.Y -EndX $scrollbarEnd.X -EndY $scrollbarEnd.Y
+                Start-Sleep -Milliseconds $PauseMs
+            }
         }
-        Start-Sleep -Milliseconds 500
+        else {
+            Invoke-WeChatClick -X $focus.X -Y $focus.Y
+            for ($step = 0; $step -lt $stepsPerPage; $step++) {
+                Invoke-WeChatWheel -Delta $WheelDelta
+            }
+            Start-Sleep -Milliseconds $PauseMs
+        }
     }
 }
 

@@ -1,4 +1,4 @@
 interface:
   display_name: "Send WeChat Message"
   short_description: "Send WeChat messages and summarize chats on Windows 11"
-  default_prompt: "Use $send-wechat-message to open Windows WeChat, prepare a message, verify it with screenshots, send only after confirmation, or summarize group chats through WeFlow when available."
+  default_prompt: "Use $send-wechat-message to open Windows WeChat, prepare a message, verify it with screenshots, send only after confirmation, or summarize group chats by defaulting to WeFlow when available and falling back to OCR when it is not."
