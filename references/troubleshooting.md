@@ -65,6 +65,17 @@ Fixes:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_wechat_access.ps1
 ```
 
+## Need A Safer Title Check
+
+If search or navigation is uncertain, use the active-title helper before drafting or sending:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1 -Expected "文件传输助手" -Exact
+```
+
+If the returned title is not the intended chat, stop and correct the target conversation first.
+
 ## Chat List Moves In The Wrong Place
 
 `navigate_chat_list.ps1` assumes the standard left-pane chat list layout.

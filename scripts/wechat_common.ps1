@@ -104,8 +104,9 @@ function Get-WeChatProcess {
         ForEach-Object { Get-Process -Name $_ -ErrorAction SilentlyContinue } |
         Where-Object { $_.MainWindowHandle -ne 0 }
 
+    $wechatTitle = "`u{5FAE}`u{4FE1}"
     $preferred = $candidates |
-        Where-Object { $_.MainWindowTitle -eq '微信' }
+        Where-Object { $_.MainWindowTitle -eq $wechatTitle }
 
     if ($preferred) {
         return ($preferred | Select-Object -First 1)
@@ -360,7 +361,8 @@ function Find-WeChatSendButtonElement {
         if ([string]::IsNullOrWhiteSpace($name)) {
             continue
         }
-        if ($name -like '*发送*' -or $name -like '*Send*') {
+        $sendLabel = "`u{53D1}`u{9001}"
+        if ($name -like "*$sendLabel*" -or $name -like '*Send*') {
             return $element
         }
     }

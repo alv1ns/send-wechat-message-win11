@@ -40,6 +40,7 @@ In live validation on this machine, the clipboard-paste fallback was the most re
 - `scripts/check_wechat_access.ps1`
 - `scripts/check_weflow_access.ps1`
 - `scripts/capture_wechat_window.ps1`
+- `scripts/get_active_chat_title.ps1 [-Expected "<name>"] [-Exact]`
 - `scripts/find_weflow_session.ps1 -Keyword "<name>"`
 - `scripts/export_weflow_messages.ps1 [-Talker <id> | -SessionKeyword <name>]`
 - `scripts/prepare_weflow_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
@@ -56,6 +57,8 @@ In live validation on this machine, the clipboard-paste fallback was the most re
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_wechat_access.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1 -Expected "文件传输助手" -Exact
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\focus_composer_and_set_value.ps1 -Message "hello from Codex"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
 ```
@@ -81,6 +84,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\focus_composer
 - In search, do not press `Enter` immediately after entering text.
 - Search-based chat switching is still semi-automatic on Windows.
 - After any search attempt, capture the window and verify the title area before drafting or sending.
+- You can also run `scripts\get_active_chat_title.ps1` for a quick title check, or pass `-Expected` to fail fast when the wrong chat is open.
 - If the title is not correct, ask the user to open the target chat manually.
 
 ### Reading chat history
@@ -164,6 +168,7 @@ This repository is public. Published examples and docs should stay generic:
 - `scripts/check_wechat_access.ps1`
 - `scripts/check_weflow_access.ps1`
 - `scripts/capture_wechat_window.ps1`
+- `scripts/get_active_chat_title.ps1 [-Expected "<name>"] [-Exact]`
 - `scripts/find_weflow_session.ps1 -Keyword "<名称>"`
 - `scripts/export_weflow_messages.ps1 [-Talker <id> | -SessionKeyword <name>]`
 - `scripts/prepare_weflow_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
@@ -180,6 +185,8 @@ This repository is public. Published examples and docs should stay generic:
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\check_wechat_access.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\get_active_chat_title.ps1 -Expected "文件传输助手" -Exact
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\focus_composer_and_set_value.ps1 -Message "hello from Codex"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\capture_wechat_window.ps1
 ```
@@ -205,6 +212,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\focus_composer
 - 在搜索框输入后不要立刻回车。
 - Windows 里的“搜索后自动切换到联系人 / 群聊”目前仍不够稳。
 - 每次搜索后都应该截图确认标题栏，再继续草稿或发送。
+- 也可以直接运行 `scripts\get_active_chat_title.ps1` 快速读取当前会话标题；如果要更稳，可以加 `-Expected` 做失败即停的校验。
 - 如果标题不对，优先让用户手动打开目标会话。
 
 ### 读取历史消息
@@ -251,4 +259,3 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_weflow
 - 不要公开真实联系人名称或真实消息内容，除非已经明确做过匿名化
 - 示例里优先使用可复用的占位写法
 - 发送验证完成后应及时清理临时截图
-
