@@ -22,8 +22,7 @@ It is designed for a conservative workflow:
 - ask for explicit confirmation before sending
 - capture screenshots for verification
 
-It also supports integrating with [WeFlow](https://github.com/hicccc77/WeFlow) as a local chat-history source for group-chat summarization.
-If WeFlow is not available, the default summary helper falls back to OCR over captured chat-history screenshots.
+It also supports integrating with [WeFlow](https://github.com/hicccc77/WeFlow) as a local chat-history source for group-chat summarization. This branch is WeFlow-only for summaries (no OCR fallback).
 
 ### Why Windows uses paste fallback
 
@@ -45,8 +44,6 @@ In live validation on this machine, the clipboard-paste fallback was the most re
 - `scripts/find_weflow_session.ps1 -Keyword "<name>"`
 - `scripts/export_weflow_messages.ps1 [-Talker <id> | -SessionKeyword <name>]`
 - `scripts/prepare_weflow_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
-- `scripts/prepare_chat_summary.ps1 [-Talker <id> | -SessionKeyword <name>]`
-- `scripts/ocr_chat_history.ps1 [-InputDir <path>] [-OutFile <path>]`
 - `scripts/navigate_chat_list.ps1 -Offset <int>`
 - `scripts/focus_composer_and_set_value.ps1 -Message "<message>"`
 - `scripts/focus_composer_and_paste.ps1 -Message "<message>"` (compatibility wrapper)
@@ -125,13 +122,6 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_weflow
 
 This path uses WeFlow's local API on `http://127.0.0.1:5031` by default and avoids brittle GUI scrolling for large summaries.
 
-### Auto summary (WeFlow or OCR)
-
-Use the auto helper to prefer WeFlow and fall back to OCR when WeFlow is unavailable:
-
-```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_chat_summary.ps1 -SessionKeyword "project group"
-```
 
 ### Privacy
 
@@ -161,7 +151,7 @@ This repository is public. Published examples and docs should stay generic:
 - 发送前必须先获得用户明确确认
 - 用截图验证当前状态和发送结果
 
-它也支持结合 [WeFlow](https://github.com/hicccc77/WeFlow) 的本地 HTTP API 做群聊总结，不必完全依赖微信窗口滚动截图。
+它也支持结合 [WeFlow](https://github.com/hicccc77/WeFlow) 的本地 HTTP API 做群聊总结，不必完全依赖微信窗口滚动截图。本分支的群聊总结仅走 WeFlow（不包含 OCR 回退）。
 
 ### 为什么 Windows 版优先保留粘贴回退
 
@@ -266,4 +256,5 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\prepare_weflow
 - 不要公开真实联系人名称或真实消息内容，除非已经明确做过匿名化
 - 示例里优先使用可复用的占位写法
 - 发送验证完成后应及时清理临时截图
+
 
